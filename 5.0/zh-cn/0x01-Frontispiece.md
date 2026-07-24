@@ -2,7 +2,7 @@
 
 ## 关于本标准
 
-应用安全验证标准（Application Security Verification Standard，ASVS）是一组应用安全要求，架构师、开发人员、测试人员、安全专业人员、工具厂商和使用方都可以用它来定义、构建、测试和验证安全的应用。
+应用安全验证标准（Application Security Verification Standard，ASVS）收录了一组应用安全要求，可供架构师、开发人员、测试人员、安全专业人员、工具厂商和使用方用于定义、构建、测试和验证安全的应用。
 
 ## 版权和许可
 
@@ -14,7 +14,7 @@
 
 本文档依据 [Creative Commons Attribution-ShareAlike 4.0 International License](https://creativecommons.org/licenses/by-sa/4.0/) 发布。
 
-在任何复用或分发场景中，你都必须向他人清楚说明本作品的许可条款。
+复用或分发本作品时，必须向接收方明确说明本作品所采用的许可条款。
 
 ## 项目负责人
 
@@ -43,4 +43,4 @@
 
 如果 5.x 贡献者名单中遗漏了你的署名，请在 GitHub 上提交工单，以便在后续 5.x 更新中补充。
 
-应用安全验证标准建立在 ASVS 1.0（2008）到 4.0（2019）参与者工作的基础之上。ASVS 沿用至今的许多结构和验证项，最初由 Andrew van der Stock、Mike Boberski、Jeff Williams、Dave Wichers 以及其他众多贡献者编写。感谢所有曾经参与贡献的人。如需查看早期贡献者的完整名单，请查阅各个历史版本。
+应用安全验证标准建立在 ASVS 1.0（2008）至 4.0（2019）历届参与者工作的基础之上。ASVS 沿用至今的许多结构和验证项，最初由 Andrew van der Stock、Mike Boberski、Jeff Williams、Dave Wichers 等众多贡献者编写。谨向所有曾参与本项目的人致谢。早期贡献者的完整名单请参阅各个历史版本。

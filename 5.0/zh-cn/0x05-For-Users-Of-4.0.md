@@ -59,9 +59,9 @@ NIST [数字身份指南（SP 800-63）](https://pages.nist.gov/800-63-3/) 长�
 
 虽然这些指南仍是重要参考，但严格对齐也带来了挑战，包括术语不够普遍、类似要求重复，以及映射不完整。5.0 版不再采用这种方式，以提升清晰度和相关性。
 
-### 不再直接映射 Common Weakness Enumeration（CWE）
+### 不再直接映射通用弱点枚举（Common Weakness Enumeration，CWE）
 
-[Common Weakness Enumeration（CWE）](https://cwe.mitre.org/) 为软件安全弱点提供了一套实用的分类体系。不过，一些 CWE 只是上位类别，一条要求也未必能准确对应到单个 CWE；此外，4.x 版本还存在部分映射不准确的问题。因此，5.0 版不再维护与 CWE 的直接映射。
+[通用弱点枚举（Common Weakness Enumeration，CWE）](https://cwe.mitre.org/) 为软件安全弱点提供了一套实用的分类体系。不过，一些 CWE 只是上位类别，一条要求也未必能准确对应到单个 CWE；此外，4.x 版本还存在部分映射不准确的问题。因此，5.0 版不再维护与 CWE 的直接映射。
 
 ## 重新思考等级定义
 

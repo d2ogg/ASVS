@@ -5,10 +5,10 @@
 本附录将密码机制分为以下使用级别：
 
 * 可用（A）：本标准认可，可在应用中使用。
-* 遗留（L）：不应在应用中使用，仅可用于兼容现有的遗留应用或代码。使用此类机制目前本身不一定构成漏洞，但应尽快替换为更安全、能够适应未来需求的机制。
+* 遗留（L）：不应在应用中使用，仅可用于兼容现有的遗留应用或代码。目前使用此类机制本身不被视为漏洞，但应尽快替换为更安全、能够适应未来需求的机制。
 * 禁止（D）：不得使用，因为这类机制目前已被攻破，或无法提供足够的安全性。
 
-在具体应用中，可能需要基于以下原因调整此列表：
+在具体应用中，可能需要基于多种原因调整此列表，包括：
 
 * 密码学领域出现新的发展；
 * 满足法规要求。
@@ -101,7 +101,7 @@ AES 等分组密码可采用不同的工作模式。电子密码本（ECB）等�
 
 * 所有加密消息都必须经过认证。使用任何 CBC 模式时，都必须同时使用基于哈希的 MAC 算法验证消息。通常必须采用先加密后哈希（Encrypt-Then-Hash）的方式，但 TLS 1.2 使用先哈希后加密（Hash-Then-Encrypt）。如果无法满足这一要求，则不得使用 CBC。仅磁盘加密允许在不使用 MAC 算法的情况下进行加密。
 * 使用 CBC 时，必须确保以恒定时间完成填充验证。
-* 使用 CCM-8 时，MAC 标签仅提供 64 位安全强度，不符合要求 6.2.9 中至少 128 位安全强度的规定。
+* 使用 CCM-8 时，MAC 标签仅提供 64 位安全强度，不符合要求 11.2.3 中至少 128 位安全强度的规定。
 * 磁盘加密不在 ASVS 的范围内，因此本附录未列出本标准认可的磁盘加密方法。此类场景通常允许使用不带认证的加密，并普遍采用 XTS、XEX 和 LRW 模式。
 
 ### 密钥封装
@@ -109,7 +109,7 @@ AES 等分组密码可采用不同的工作模式。电子密码本（ECB）等�
 密码学密钥封装（以及相应的密钥解封）是指使用额外的加密机制封装现有密钥，使原始密钥在传输等过程中不会直接暴露。用于保护原始密钥的附加密钥称为封装密钥。
 
 当需要在不可信位置保护密钥，或通过不可信网络及应用内部传输敏感密钥时，可以使用此操作。
-不过，在执行封装或解封前，必须充分了解原始密钥的属性，例如身份和用途。这项操作可能影响源系统、目标系统或应用的安全性，尤其会影响合规性，包括密钥功能（如签名）的审计记录以及适当的密钥存储方式。
+不过，在决定执行封装或解封前，应认真考虑并理解原始密钥的属性，例如身份和用途。这项操作可能影响源系统、目标系统或应用的安全性，尤其会影响合规性，包括密钥功能（如签名）的审计记录以及适当的密钥存储方式。
 
 密钥封装必须使用 AES-256，并遵循 [NIST SP 800-38F](https://csrc.nist.gov/pubs/sp/800/38/f/final)，同时为未来的量子计算威胁做好准备。下表按优先顺序列出基于 AES 的加密模式：
 
@@ -122,7 +122,7 @@ AES 等分组密码可采用不同的工作模式。电子密码本（ECB）等�
 
 ### 认证加密
 
-除磁盘加密外，加密数据必须使用某种认证加密（AE）方案防止未经授权的篡改，通常应采用带关联数据的认证加密（AEAD）方案。
+除磁盘加密外，加密数据必须使用某种认证加密（AE）方案防止未经授权的篡改，通常采用带关联数据的认证加密（AEAD）方案。
 
 应用应优先使用本标准认可的 AEAD 方案，也可以将本标准认可的加密方案与本标准认可的 MAC 算法组合，并采用先加密后计算 MAC（Encrypt-then-MAC）的结构。
 
@@ -202,7 +202,7 @@ AES 等分组密码可采用不同的工作模式。电子密码本（ECB）等�
 
 | KDF | 参考资料 | 参数要求 | 状态 |
 | --- | --------- | ------------------- | ------ |
-| argon2id | [RFC 9106](https://www.rfc-editor.org/info/rfc9106) | t = 1: m ≥ 47104 (46 MiB), p = 1<br>t = 2: m ≥ 19456 (19 MiB), p = 1<br>t ≥ 3: m ≥ 12288 (12 MiB), p = 1 | A |
+| argon2id | [RFC 9106](https://www.rfc-editor.org/info/rfc9106) | t = 1: m ≥ 47104 (46 MiB), p = 1<br>t = 2: m ≥ 19456 (19 MiB), p = 1 | A |
 | scrypt | [RFC 7914](https://www.rfc-editor.org/info/rfc7914) | p = 1: N ≥ 2^17 (128 MiB), r = 8<br>p = 2: N ≥ 2^16 (64 MiB), r = 8<br>p ≥ 3: N ≥ 2^15 (32 MiB), r = 8 | A |
 | PBKDF2-HMAC-SHA-512 | [NIST SP 800-132](https://csrc.nist.gov/pubs/sp/800/132/final)，[FIPS 180-4](https://csrc.nist.gov/pubs/fips/180-4/upd1/final) | 迭代次数 ≥ 210,000 | A |
 | PBKDF2-HMAC-SHA-256 | [NIST SP 800-132](https://csrc.nist.gov/pubs/sp/800/132/final)，[FIPS 180-4](https://csrc.nist.gov/pubs/fips/180-4/upd1/final) | 迭代次数 ≥ 600,000 | A |
@@ -265,19 +265,19 @@ AES 等分组密码可采用不同的工作模式。电子密码本（ECB）等�
 
 消息认证码（MAC）是一种用于验证消息完整性和真实性的密码学结构。MAC 以消息和秘密密钥作为输入，生成固定长度的标签，即 MAC 值。MAC 广泛用于 TLS/SSL 等安全通信协议，以确保通信双方交换的消息真实且未被篡改。
 
-| MAC 算法 | 参考资料                                                                                       | 状态 | 限制 |
-| --------------| ----------------------------------------------------------------------------------------- | -------| ------------ |
-| HMAC-SHA-256  | [RFC 2104](https://www.rfc-editor.org/info/rfc2104) & [FIPS 198-1](https://csrc.nist.gov/pubs/fips/198-1/final) | A | |
-| HMAC-SHA-384  | [RFC 2104](https://www.rfc-editor.org/info/rfc2104) & [FIPS 198-1](https://csrc.nist.gov/pubs/fips/198-1/final) | A | |
-| HMAC-SHA-512  | [RFC 2104](https://www.rfc-editor.org/info/rfc2104) & [FIPS 198-1](https://csrc.nist.gov/pubs/fips/198-1/final) | A | |
-| KMAC128       | [NIST SP 800-185](https://csrc.nist.gov/pubs/sp/800/185/final)                             | A | |
-| KMAC256       | [NIST SP 800-185](https://csrc.nist.gov/pubs/sp/800/185/final)                             | A | |
-| BLAKE3（keyed_hash 模式） | [BLAKE3：一个可在各种环境中高效运行的函数](https://github.com/BLAKE3-team/BLAKE3-specs/raw/master/blake3.pdf)  | A | |
-| AES-CMAC      | [RFC 4493](https://datatracker.ietf.org/doc/html/rfc4493) & [NIST SP 800-38B](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38b.pdf) | A | |
-| AES-GMAC      | [NIST SP 800-38D](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf)            | A | |
-| Poly1305-AES  | [The Poly1305-AES message-authentication code](https://cr.yp.to/mac/poly1305-20050329.pdf)                  | A | |
-| HMAC-SHA-1    | [RFC 2104](https://www.rfc-editor.org/info/rfc2104) & [FIPS 198-1](https://csrc.nist.gov/pubs/fips/198-1/final) | L | |
-| HMAC-MD5      | [RFC 1321](https://www.rfc-editor.org/info/rfc1321)                                | D      | |
+| MAC 算法 | 参考资料                                                                                       | 状态 |
+| --------------| ----------------------------------------------------------------------------------------- | -------|
+| HMAC-SHA-256  | [RFC 2104](https://www.rfc-editor.org/info/rfc2104) & [FIPS 198-1](https://csrc.nist.gov/pubs/fips/198-1/final) | A |
+| HMAC-SHA-384  | [RFC 2104](https://www.rfc-editor.org/info/rfc2104) & [FIPS 198-1](https://csrc.nist.gov/pubs/fips/198-1/final) | A |
+| HMAC-SHA-512  | [RFC 2104](https://www.rfc-editor.org/info/rfc2104) & [FIPS 198-1](https://csrc.nist.gov/pubs/fips/198-1/final) | A |
+| KMAC128       | [NIST SP 800-185](https://csrc.nist.gov/pubs/sp/800/185/final)                             | A |
+| KMAC256       | [NIST SP 800-185](https://csrc.nist.gov/pubs/sp/800/185/final)                             | A |
+| BLAKE3（keyed_hash 模式） | [BLAKE3：一个可在各种环境中高效运行的函数](https://github.com/BLAKE3-team/BLAKE3-specs/raw/master/blake3.pdf)  | A |
+| AES-CMAC      | [RFC 4493](https://datatracker.ietf.org/doc/html/rfc4493) & [NIST SP 800-38B](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-38b.pdf) | A |
+| AES-GMAC      | [NIST SP 800-38D](https://nvlpubs.nist.gov/nistpubs/Legacy/SP/nistspecialpublication800-38d.pdf)            | A |
+| Poly1305-AES  | [The Poly1305-AES message-authentication code](https://cr.yp.to/mac/poly1305-20050329.pdf)                  | A |
+| HMAC-SHA-1    | [RFC 2104](https://www.rfc-editor.org/info/rfc2104) & [FIPS 198-1](https://csrc.nist.gov/pubs/fips/198-1/final) | L |
+| HMAC-MD5      | [RFC 1321](https://www.rfc-editor.org/info/rfc1321)                                | D      |
 
 ## 数字签名
 
@@ -294,6 +294,6 @@ AES 等分组密码可采用不同的工作模式。电子密码本（ECB）等�
 
 ## 后量子加密标准
 
-由于目前经过安全加固的代码和实现参考仍然很少，PQC 实现必须符合 [FIPS-203](https://csrc.nist.gov/pubs/fips/203/ipd)、[FIPS-204](https://csrc.nist.gov/pubs/fips/204/ipd) 和 [FIPS-205](https://csrc.nist.gov/pubs/fips/205/ipd)。另见：[NIST 发布首批三项最终版后量子密码学标准](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards)。
+后量子密码学（PQC）实现应遵循 [FIPS-203](https://csrc.nist.gov/pubs/fips/203/ipd)、[FIPS-204](https://csrc.nist.gov/pubs/fips/204/ipd) 和 [FIPS-205](https://csrc.nist.gov/pubs/fips/205/ipd)。目前，这些标准可用的加固代码示例或参考实现还不多。更多详情见：[NIST 关于首批三项最终版后量子加密标准的公告（2024 年 8 月）](https://www.nist.gov/news-events/news/2024/08/nist-releases-first-3-finalized-post-quantum-encryption-standards)。
 
 拟议的后量子混合 TLS 密钥协商方法 [mlkem768x25519](https://datatracker.ietf.org/doc/draft-kwiatkowski-tls-ecdhe-mlkem/03/) 已获得 [Firefox 132](https://www.mozilla.org/en-US/firefox/132.0/releasenotes/) 和 [Chrome 131](https://security.googleblog.com/2024/09/a-new-path-for-kyber-on-web.html) 等主流浏览器支持。该方法可用于密码学测试环境，也可在业界或政府批准的密码库提供支持时使用。
